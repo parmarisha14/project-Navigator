@@ -43,21 +43,44 @@ const Login = ({ setIsLoggedIn, setRole }) => {
           <label className="form-label fw-semibold">Email</label>
           <div className="input-group mb-3">
             <span className="input-group-text bg-white"><FaEnvelope /></span>
-            <input type="email" name="email" className="form-control" placeholder="example@gmail.com" required value={formData.email} onChange={handleChange} />
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              placeholder="example@gmail.com"
+              required
+              value={formData.email}
+              onChange={handleChange}
+            />
           </div>
 
           <label className="form-label fw-semibold">Password</label>
           <div className="input-group mb-3">
             <span className="input-group-text bg-white"><FaLock /></span>
-            <input type={showPass ? "text" : "password"} name="password" className="form-control" placeholder="Enter min 8 characters" minLength={8} required value={formData.password} onChange={handleChange} />
-            <span className="input-group-text bg-white" style={{ cursor: "pointer" }} onClick={() => setShowPass(!showPass)}>
+            <input
+              type={showPass ? "text" : "password"}
+              name="password"
+              className="form-control"
+              placeholder="Enter min 8 characters"
+              minLength={8}
+              required
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <span
+              className="input-group-text bg-white"
+              style={{ cursor: "pointer" }}
+              onClick={() => setShowPass(!showPass)}
+            >
               {showPass ? <AiFillEyeInvisible /> : <AiFillEye />}
             </span>
           </div>
 
           <button type="submit" className="btn btn-primary w-100 py-2">Sign In</button>
+
           <p className="text-center mt-3">
-            Don't have an account? <a href="/register">Register</a>
+            Don't have an account? <a href="/register">Register</a> <br />
+            Are you Admin? <a href="/admin-login">Click here to login as Admin</a>
           </p>
         </form>
       </div>
