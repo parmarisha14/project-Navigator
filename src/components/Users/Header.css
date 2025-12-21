@@ -1,0 +1,71 @@
+.custom-nav {
+  background: #23739C;
+}
+
+.nav-logo {
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+}
+
+.nav-title {
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.nav-links .custom-link {
+  color: #fff !important;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 3px;
+  transition: 0.3s;
+}
+
+.nav-links .custom-link::after {
+  content: "";
+  width: 0%;
+  height: 3px;
+  background-color: #fff;
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-links .custom-link:hover::after,
+.nav-links .custom-link.active::after {
+  width: 100%;
+}
+
+.navbar-toggler {
+  border-color: #fff;
+}
+
+.navbar-toggler-icon {
+  background-color: #fff !important;
+}
+
+.profile-btn {
+  background: transparent !important;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+}
+
+.profile-btn:focus {
+  box-shadow: none;
+}
+
+.dropdown-menu {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #fff !important; /* dropdown white background */
+}
+
+.dropdown-item {
+  color: #000 !important; /* dropdown text black */
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0 !important;
+}

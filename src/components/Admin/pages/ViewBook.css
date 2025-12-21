@@ -1,0 +1,98 @@
+.viewbook-wrapper {
+  padding: 30px;
+}
+
+.viewbook-card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+}
+
+.viewbook-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f8fafc;
+}
+
+.viewbook-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.viewbook-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.viewbook-table th,
+.viewbook-table td {
+  padding: 12px 14px;
+  font-size: 14px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.viewbook-table th {
+  background-color: #f1f5f9;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.viewbook-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+
+.viewbook-table .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.viewbook-table .btn:focus,
+.viewbook-table .btn:active {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+
+.viewbook-table .btn-warning svg {
+  color: white;
+}
+
+
+.pagination-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f1f5f9; 
+  color: #1e293b; 
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #a5b4fc;
+  color: #fff;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.active-page {
+  background-color: #6366f1; 
+  color: #fff;
+}
+
+@media (max-width: 576px) {
+  .pagination-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
