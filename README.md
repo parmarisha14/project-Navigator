@@ -37,9 +37,9 @@ Responsive UI
 
 Use these to login as Admin:
 
-Email: admin@library.com
+Email: admin@gmail.com
 
-Password: admin123
+Password: 12345678
 
 ये values आपके React State / Local Storage में match करवानी होती हैं।
 ```
