@@ -6,7 +6,6 @@ const ViewBook = ({ list, handleDelete, handleEdit }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 5;
 
-  
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
   const currentBooks = list.slice(indexOfFirstBook, indexOfLastBook);
@@ -22,13 +21,12 @@ const ViewBook = ({ list, handleDelete, handleEdit }) => {
         <div className="viewbook-header">
           <h2>Books List</h2>
         </div>
-
         <table className="viewbook-table">
           <thead>
             <tr>
               <th>#</th>
               <th>Image</th>
-              <th>Book Title</th>
+              <th>Title</th>
               <th>Author</th>
               <th>Category</th>
               <th>Year</th>
@@ -37,7 +35,6 @@ const ViewBook = ({ list, handleDelete, handleEdit }) => {
               <th>Action</th>
             </tr>
           </thead>
-
           <tbody>
             {currentBooks.length > 0 ? (
               currentBooks.map((book, index) => (
@@ -49,42 +46,39 @@ const ViewBook = ({ list, handleDelete, handleEdit }) => {
                         src={book.image}
                         alt={book.title}
                         style={{
-                          width: "50px",
-                          height: "50px",
+                          width: 50,
+                          height: 50,
                           objectFit: "cover",
-                          borderRadius: "4px",
+                          borderRadius: 4,
                         }}
                       />
                     )}
                   </td>
-                  <td>{book.title}</td>
-                  <td>{book.author}</td>
+                  <td title={book.title}>{book.title}</td>
+                  <td title={book.author}>{book.author}</td>
                   <td>{book.category}</td>
                   <td>{book.year}</td>
                   <td>{book.language}</td>
                   <td>{book.quantity}</td>
                   <td>
                     <button
-                      type="button"
                       className="btn btn-danger btn-sm me-2"
                       onClick={() => handleDelete(book.id)}
                     >
-                      <FaTrash /> <span className="ms-2">Delete</span>
+                      <FaTrash /> Delete
                     </button>
                     <button
-                      type="button"
-                      className="btn btn-warning btn-sm me-2"
+                      className="btn btn-warning btn-sm"
                       onClick={() => handleEdit(book.id)}
                     >
-                      <FaEdit style={{ color: "white" }} />{" "}
-                      <span className="ms-2 text-light">Edit</span>
+                      <FaEdit /> Edit
                     </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="9" className="text-center fs-5 fw-bold">
+                <td colSpan="9" className="text-center">
                   Data NOT Found
                 </td>
               </tr>
@@ -92,32 +86,21 @@ const ViewBook = ({ list, handleDelete, handleEdit }) => {
           </tbody>
         </table>
 
-        
         {totalPages > 1 && (
           <div className="pagination mt-3 d-flex justify-content-center gap-2 flex-wrap">
-            <button
-              className="pagination-btn"
-              onClick={prevPage}
-              disabled={currentPage === 1}
-            >
+            <button onClick={prevPage} disabled={currentPage === 1}>
               Prev
             </button>
-
             {Array.from({ length: totalPages }, (_, i) => (
               <button
                 key={i + 1}
-                className={`pagination-btn ${currentPage === i + 1 ? "active-page" : ""}`}
+                className={currentPage === i + 1 ? "active-page" : ""}
                 onClick={() => paginate(i + 1)}
               >
                 {i + 1}
               </button>
             ))}
-
-            <button
-              className="pagination-btn"
-              onClick={nextPage}
-              disabled={currentPage === totalPages}
-            >
+            <button onClick={nextPage} disabled={currentPage === totalPages}>
               Next
             </button>
           </div>

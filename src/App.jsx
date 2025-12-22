@@ -21,7 +21,15 @@ import MyBooks from "./components/Users/pages/MyBooks";
 import useBook from "./Hooks/useBook";
 
 const App = () => {
-  const { book, list, borrow, handleChange, handleSubmit, handleDelete, handleEdit, handleBorrowedBook } = useBook();
+  const {
+    book,
+    list,
+    borrow,
+    handleSubmit,
+    handleDelete,
+    handleEdit,
+    handleBorrowedBook,
+  } = useBook();
 
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
@@ -45,34 +53,112 @@ const App = () => {
     setIsUserLoggedIn(false);
   };
 
-  const AdminProtected = () => (isAdminLoggedIn ? <Outlet /> : <Navigate to="/admin-login" replace />);
-  const UserProtected = () => (isUserLoggedIn ? <Outlet /> : <Navigate to="/login" replace />);
+  const AdminProtected = () =>
+    isAdminLoggedIn ? <Outlet /> : <Navigate to="/admin-login" replace />;
+
+  const UserProtected = () =>
+    isUserLoggedIn ? <Outlet /> : <Navigate to="/login" replace />;
 
   return (
     <Routes>
-      <Route path="/admin-login" element={!isAdminLoggedIn ? <AdminLogin setIsLoggedIn={setIsAdminLoggedIn} /> : <Navigate to="/admin" replace />} />
-      <Route path="/login" element={!isUserLoggedIn ? <UserLogin setIsLoggedIn={setIsUserLoggedIn} /> : <Navigate to="/" replace />} />
-      <Route path="/register" element={!isUserLoggedIn ? <Register /> : <Navigate to="/" replace />} />
+      <Route
+        path="/admin-login"
+        element={
+          !isAdminLoggedIn ? (
+            <AdminLogin setIsLoggedIn={setIsAdminLoggedIn} />
+          ) : (
+            <Navigate to="/admin" replace />
+          )
+        }
+      />
+
+      <Route
+        path="/login"
+        element={
+          !isUserLoggedIn ? (
+            <UserLogin setIsLoggedIn={setIsUserLoggedIn} />
+          ) : (
+            <Navigate to="/" replace />
+          )
+        }
+      />
+
+      <Route
+        path="/register"
+        element={!isUserLoggedIn ? <Register /> : <Navigate to="/" replace />}
+      />
 
       <Route element={<AdminProtected />}>
         <Route element={<Layout handleLogout={handleAdminLogout} />}>
-          <Route path="/admin" element={<AdminDashboard list={list} borrow={borrow} />} />
-          <Route path="/admin/add-book" element={<AddBook book={book} handleChange={handleChange} handleSubmit={handleSubmit} />} />
-          <Route path="/admin/view-book" element={<ViewBook list={list} handleDelete={handleDelete} handleEdit={handleEdit} />} />
+          <Route
+            path="/admin"
+            element={<AdminDashboard list={list} borrow={borrow} />}
+          />
+          <Route
+            path="/admin/add-book"
+            element={<AddBook book={book} handleSubmit={handleSubmit} />}
+          />
+          <Route
+            path="/admin/view-book"
+            element={
+              <ViewBook
+                list={list}
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+              />
+            }
+          />
         </Route>
       </Route>
 
       <Route element={<UserProtected />}>
         <Route element={<UserLayout handleLogout={handleUserLogout} />}>
-          <Route path="/" element={<Home list={list} borrow={borrow} handleBorrowedBook={handleBorrowedBook} />} />
+          <Route
+            path="/"
+            element={
+              <Home
+                list={list}
+                borrow={borrow}
+                handleBorrowedBook={handleBorrowedBook}
+              />
+            }
+          />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/book" element={<Books list={list} borrow={borrow} handleBorrowedBook={handleBorrowedBook} />} />
-          <Route path="/my-books" element={<MyBooks borrow={borrow} handleBorrowedBook={handleBorrowedBook} />} />
+          <Route
+            path="/book"
+            element={
+              <Books
+                list={list}
+                borrow={borrow}
+                handleBorrowedBook={handleBorrowedBook}
+              />
+            }
+          />
+          <Route
+            path="/my-books"
+            element={
+              <MyBooks
+                borrow={borrow}
+                handleBorrowedBook={handleBorrowedBook}
+              />
+            }
+          />
         </Route>
       </Route>
 
-      <Route path="*" element={isAdminLoggedIn ? <Navigate to="/admin" replace /> : isUserLoggedIn ? <Navigate to="/" replace /> : <Navigate to="/login" replace />} />
+      <Route
+        path="*"
+        element={
+          isAdminLoggedIn ? (
+            <Navigate to="/admin" replace />
+          ) : isUserLoggedIn ? (
+            <Navigate to="/" replace />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
     </Routes>
   );
 };

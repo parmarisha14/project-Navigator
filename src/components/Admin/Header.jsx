@@ -3,7 +3,7 @@ import logo from "../../assets/images/logo.png";
 
 const Header = () => {
   return (
-    <nav className="navbar bg-white border-bottom">
+    <nav className="navbar bg-white border-bottom fixed-top" >
       <div className="container">
         <div className="d-flex align-items-center gap-1">
 

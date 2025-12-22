@@ -10,7 +10,7 @@ const AdminLogin = ({ setIsLoggedIn, setRole }) => {
   const [showPass, setShowPass] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
 
-  // Redirect if already logged in
+  
   useEffect(() => {
     const isLogged = localStorage.getItem("adminLogin") === "true";
     if (isLogged) {
@@ -59,7 +59,7 @@ const AdminLogin = ({ setIsLoggedIn, setRole }) => {
               type="email"
               name="email"
               className="form-control"
-              placeholder="admin@gmail.com"
+              placeholder="Enter Emaill"
               required
               value={formData.email}
               onChange={handleChange}
@@ -73,7 +73,7 @@ const AdminLogin = ({ setIsLoggedIn, setRole }) => {
               type={showPass ? "text" : "password"}
               name="password"
               className="form-control"
-              placeholder="Enter min 8 characters"
+              placeholder="Enter Password"
               minLength={8}
               required
               value={formData.password}
@@ -88,7 +88,7 @@ const AdminLogin = ({ setIsLoggedIn, setRole }) => {
             </span>
           </div>
 
-          <button type="submit" className="btn btn-primary w-100 py-2">
+          <button type="submit" className="login-btn w-100 py-2">
             Sign In
           </button>
         </form>

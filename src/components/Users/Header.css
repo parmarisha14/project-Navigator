@@ -59,11 +59,11 @@
 .dropdown-menu {
   border-radius: 10px;
   padding: 10px;
-  background-color: #fff !important; /* dropdown white background */
+  background-color: #fff !important; 
 }
 
 .dropdown-item {
-  color: #000 !important; /* dropdown text black */
+  color: #000 !important; 
 }
 
 .dropdown-item:hover {

@@ -48,9 +48,7 @@ const Header = ({ handleLogout }) => {
               
             </button>
             <ul className="dropdown-menu dropdown-menu-end shadow-sm">
-              <li>
-                <NavLink className="dropdown-item d-flex align-items-center gap-2" to="/profile"><FaUser /> My Profile</NavLink>
-              </li>
+              
               <li>
                 <NavLink className="dropdown-item d-flex align-items-center gap-2" to="/my-books"><FaBook /> My Books</NavLink>
               </li>

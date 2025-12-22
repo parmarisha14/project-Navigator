@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./AddBook.css";
 
-const AddBook = ({ book, handleChange, handleSubmit }) => {
-  const isEdit = !!book?.id;
+const AddBook = ({ handleSubmit, book: editBook, setBook }) => {
+  const [book, updateBook] = useState({});
+
+  useEffect(() => {
+    if (editBook?.id) {
+      updateBook(editBook);
+    }
+  }, [editBook]);
+
+  const handleChanges = (e) => {
+    const { name, value, type } = e.target;
+    updateBook({
+      ...book,
+      [name]: type === "number" ? (value === "" ? "" : Number(value)) : value,
+    });
+  };
+
+  const isEdit = book?.id ? true : false;
 
   const categories = [
     "Fiction",
@@ -14,133 +30,120 @@ const AddBook = ({ book, handleChange, handleSubmit }) => {
     "History",
     "Kids",
     "Comics",
-    "Novel"
+    "Novel",
   ];
 
   return (
     <div className="addbook-wrapper">
       <div className="addbook-card">
-        <h4 className="mb-3">{isEdit ? "Edit Book" : "Add New Book"}</h4>
+        <h4 className="mb-2">{isEdit ? "Edit Book" : "Add New Book"}</h4>
 
-        <form  onSubmit={handleSubmit} method="post">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit(book);
+            updateBook({
+              title: "",
+              author: "",
+              image: "",
+              category: "",
+              year: "",
+              language: "",
+              quantity: 1,
+            });
+            setBook({});
+          }}
+        >
           <div className="row">
-            {/* Left Column */}
             <div className="col-12 col-md-6 mb-3">
-              <div className="form-group mb-3">
-                <label htmlFor="image" className="form-label">Book Image *</label>
-                <input
-                  id="image"
-                  type="url"
-                  className="form-control"
-                  name="image"
-                  value={book.image || ''}
-                  onChange={handleChange}
-                  placeholder="Enter book image URL"
-                  required
-                />
-              </div>
+              <label className="form-label">Book Image *</label>
+              <input
+                type="url"
+                className="form-control"
+                name="image"
+                value={book.image}
+                onChange={handleChanges}
+                placeholder="Enter image URL"
+              />
 
-              <div className="form-group mb-3">
-                <label htmlFor="title" className="form-label">Book Title *</label>
-                <input
-                  id="title"
-                  type="text"
-                  className="form-control"
-                  name="title"
-                  value={book.title || ''}
-                  onChange={handleChange}
-                  placeholder="Enter full title"
-                  required
-                />
-              </div>
+              <label className="form-label mt-2">Book Title *</label>
+              <input
+                type="text"
+                className="form-control"
+                name="title"
+                value={book.title}
+                onChange={handleChanges}
+                placeholder="Enter book title"
+              />
 
-              <div className="form-group mb-3">
-                <label htmlFor="author" className="form-label">Author Name *</label>
-                <input
-                  id="author"
-                  type="text"
-                  className="form-control"
-                  name="author"
-                  value={book.author || ''}
-                  onChange={handleChange}
-                  placeholder="Enter author name"
-                  required
-                />
-              </div>
+              <label className="form-label mt-2">Author Name *</label>
+              <input
+                type="text"
+                className="form-control"
+                name="author"
+                value={book.author}
+                onChange={handleChanges}
+                placeholder="Enter author name"
+              />
 
-              <div className="form-group mb-3">
-                <label htmlFor="category" className="form-label">Main Category / Genre *</label>
-                <select
-                  id="category"
-                  className="form-control"
-                  name="category"
-                  value={book.category || ''}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select category</option>
-                  {categories.map((cat, index) => (
-                    <option key={index} value={cat}>{cat}</option>
-                  ))}
-                </select>
-              </div>
+              <label className="form-label mt-2">Main Category *</label>
+              <select
+                className="form-control"
+                name="category"
+                value={book.category}
+                onChange={handleChanges}
+              >
+                <option value="">Select category</option>
+                {categories.map((cat, index) => (
+                  <option key={index} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
             </div>
 
-            {/* Right Column */}
             <div className="col-12 col-md-6 mb-3">
-              <div className="form-group mb-3">
-                <label htmlFor="year" className="form-label">Publication Year *</label>
-                <input
-                  id="text"
-                  type="number"
-                  className="form-control"
-                  name="year"
-                  value={book.year || ""}
-                  onChange={handleChange}
-                  placeholder="Enter publication year"
-                  required
-                />
-              </div>
+              <label className="form-label">Publication Year *</label>
+              <input
+                type="number"
+                className="form-control"
+                name="year"
+                value={book.year}
+                onChange={handleChanges}
+                placeholder="Enter publication year"
+              />
 
-              <div className="form-group mb-3">
-                <label htmlFor="language" className="form-label">Book Language *</label>
-                <input
-                  id="language"
-                  type="text"
-                  className="form-control"
-                  name="language"
-                  value={book.language || ""}
-                  onChange={handleChange}
-                  placeholder="e.g. English, Hindi"
-                  required
-                />
-              </div>
+              <label className="form-label mt-2">Book Language *</label>
+              <input
+                type="text"
+                className="form-control"
+                name="language"
+                value={book.language}
+                onChange={handleChanges}
+                placeholder="e.g. English, Hindi"
+              />
 
-              <div className="form-group mb-3">
-                <label htmlFor="quantity" className="form-label">Quantity Available *</label>
-                <input
-                  id="quantity"
-                  type="number"
-                  className="form-control"
-                  name="quantity"
-                  value={book.quantity || ""}
-                  onChange={handleChange}
-                  min={1}
-                  max={20}
-                  placeholder="Enter total copies"
-                  required
-                />
-              </div>
+              <label className="form-label mt-2">Quantity Available *</label>
+              <input
+                type="number"
+                className="form-control"
+                name="quantity"
+                value={book.quantity}
+                onChange={handleChanges}
+                min={1}
+                max={20}
+                placeholder="Enter total copies"
+              />
             </div>
           </div>
 
-          <div className="d-flex justify-content-end mt-4">
+          <div className="d-flex justify-content-end mt-3">
             <button
               type="submit"
               className="btn btn-primary px-4"
               style={{ background: "#294666" }}
             >
-              {isEdit ? "Update Book" : "Add Book"}
+              {isEdit ? "Update" : "Submit"}
             </button>
           </div>
         </form>

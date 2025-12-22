@@ -1,78 +1,92 @@
 .slider-img {
   height: 80vh;
   object-fit: cover;
-  /* filter: brightness(90%); */
+  filter: brightness(85%);
+  border-radius: 12px;
 }
 
-.new-books h3 {
+.new-books h3,
+.new-books h4 {
   font-weight: 800;
   color: #0f172a;
   margin-bottom: 25px;
-  padding-left: 5px;
-  font-size: 28px;
-  letter-spacing: .5px;
+  font-size: 32px;
 }
 
 .new-books .card {
-  border: none;
-  background: #0f172a; 
-  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  background: #f9fafb;
+  border-radius: 16px;
   overflow: hidden;
-  transition: all 0.35s ease;
-  box-shadow: 0 0px 12px rgba(0,0,0,0.15);
+  transition: 0.35s;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  min-height: 420px;
+  width: 100%;
 }
 
 .new-books .card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 35px rgba(0,0,0,0.25);
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
 }
 
+.new-books img {
+  height: 240px;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
 
 .new-books .card-title {
-  color: #f8fafc;
-  font-weight: 600;
-  font-size: 18px;
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 5px;
 }
-
 
 .new-books p {
   margin: 0;
-  color: #cbd5e1;
+  color: #334155;
+  font-size: 16px;
+}
+
+.available-badge {
+  background: #2563eb !important;
+  padding: 8px 14px;
   font-size: 14px;
-}
-
-
-.new-books .badge {
-  background: linear-gradient(90deg, #06b6d4, #2563eb);
-  padding: 6px 12px;
-  font-size: 13px;
   font-weight: 600;
-}
-
-
-.new-books .btn-primary {
-  background: linear-gradient(to right, #3b82f6, #2563eb);
-  border: none;
-  border-radius: 8px;
-  padding: 7px 16px;
-  margin-top: 8px;
-  font-weight: 600;
-  transition: 0.3s;
   color: #fff;
 }
 
-.new-books .btn-primary:hover {
-  background: linear-gradient(to right, #1d4ed8, #1e40af);
+/* 🚫 Out of Stock Box */
+.new-books .out {
+  background: #f1f5f9;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* 🔹 Borrow Button - Blue Color */
+.borrow-btn {
+  background: #2563eb !important; /* Blue */
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-top: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.borrow-btn:hover {
+  background: #1d4ed8 !important; /* Darker blue on hover */
   transform: translateY(-2px);
 }
 
-
-.new-books .bg-secondary {
-  background: #64748b !important;
-  padding: 7px 14px;
-  border-radius: 8px;
-  display: inline-block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #f8fafc !important;
+.select-box {
+  height: 45px;
+  border-radius: 10px;
+  font-size: 16px;
 }

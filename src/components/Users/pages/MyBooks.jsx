@@ -44,8 +44,7 @@ const MyBooks = ({ borrow, handleBorrowedBook }) => {
                       <div className="d-flex justify-content-center gap-2">
                         <button
                           className="btn btn-sm btn-danger"
-                          onClick={() => handleBorrowedBook(b, "remove")}
-                          disabled={b.qty <= 1}
+                          onClick={() => handleBorrowedBook(b, "removeQty")}
                         >
                           -
                         </button>
@@ -64,7 +63,7 @@ const MyBooks = ({ borrow, handleBorrowedBook }) => {
 
                     <td>
                       <button
-                        className="btn btn-sm btn-outline-danger"
+                        className="btn btn-sm btn-danger"
                         onClick={() => handleBorrowedBook(b, "delete")}
                       >
                         Remove

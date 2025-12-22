@@ -8,148 +8,114 @@ const useBook = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let oldList = JSON.parse(localStorage.getItem("books")) || [];
-    let oldBorrow = JSON.parse(localStorage.getItem("borrow")) || [];
+    const oldList = JSON.parse(localStorage.getItem("books")) || [];
+    const oldBorrow = JSON.parse(localStorage.getItem("borrow")) || [];
     setList(oldList);
     setBorrow(oldBorrow);
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setBook({ ...book, [name]: value });
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let newList = list;
-
-    if (book.id) {
-      newList = list.map((val) => {
-        if (book.id === val.id) {
-          return book;
-        }
-        return val;
-      });
-      navigate("/admin/view-book");
-    } else {
-      newList = [...list, { ...book, id: Date.now() }];
-      navigate("/admin/view-book");
-    }
+  const handleSubmit = (bookData) => {
+    const newList = bookData.id
+      ? list.map((b) => (b.id === bookData.id ? { ...bookData } : b))
+      : [...list, { ...bookData, id: Date.now() }];
 
     setList(newList);
     localStorage.setItem("books", JSON.stringify(newList));
     setBook({});
+    navigate("/admin/view-book");
   };
 
+  
   const handleDelete = (id) => {
-    let newList = list.filter((val) => val.id !== id);
+    const newList = list.filter((b) => b.id !== id);
+    const newBorrow = borrow.filter((b) => b.id !== id);
     setList(newList);
+    setBorrow(newBorrow);
     localStorage.setItem("books", JSON.stringify(newList));
+    localStorage.setItem("borrow", JSON.stringify(newBorrow));
   };
 
+ 
   const handleEdit = (id) => {
-    let data = list.find((val) => val.id === id);
+    const data = list.find((b) => b.id === id);
     setBook(data);
     navigate("/admin/add-book");
   };
 
-const handleBorrowedBook = (book, action) => {
-  if (!book) return alert("Book not available!");
+  
+  const handleBorrowedBook = (bookItem, action) => {
+    if (!bookItem) return alert("Book not available!");
+    const data = list.find((b) => b.id === bookItem.id);
+    if (!data) return alert("Book not found!");
 
-  // Find book in main list
-  const data = list.find((b) => b.id === book.id);
-  if (!data) return alert("Book not found!");
+    const existingBorrow = borrow.find((b) => b.id === data.id);
+    const totalBorrowed = borrow.reduce((sum, b) => sum + (b.qty || 0), 0);
 
-  // ===== INCREASE QTY ( + ) =====
-  if (action === "add") {
-    if (data.quantity <= 0) return alert("Out of stock!");
-    data.quantity--;
+    const cloneList = list.map((b) => ({ ...b }));
 
-    const newList = list.map((b) => (b.id === data.id ? data : b));
-    setList(newList);
-    localStorage.setItem("books", JSON.stringify(newList));
+    if (action === "add") {
+      if (totalBorrowed >= 5) return alert("Maximum 5 books allowed!");
+      if (data.quantity <= 0) return alert("Out of stock!");
 
-    const newBorrow = borrow.map((b) =>
-      b.id === data.id ? { ...b, qty: b.qty + 1 } : b
-    );
-    setBorrow(newBorrow);
-    localStorage.setItem("borrow", JSON.stringify(newBorrow));
+      const updatedBook = { ...data, quantity: data.quantity - 1 };
+      const updatedList = cloneList.map((b) => (b.id === updatedBook.id ? updatedBook : b));
+      setList(updatedList);
+      localStorage.setItem("books", JSON.stringify(updatedList));
 
-    return;
-  }
+      const newBorrow = existingBorrow
+        ? borrow.map((b) =>
+            b.id === updatedBook.id ? { ...b, qty: b.qty + 1 } : b
+          )
+        : [...borrow, { ...updatedBook, qty: 1 }];
 
-  // ===== DECREASE QTY ( - ) =====
-  if (action === "remove") {
-    const existing = borrow.find((b) => b.id === data.id);
-    if (!existing || existing.qty <= 0) return;
+      setBorrow(newBorrow);
+      localStorage.setItem("borrow", JSON.stringify(newBorrow));
+      return;
+    }
 
-    existing.qty--;
-    data.quantity++;
+    if (action === "removeQty") {
+      if (!existingBorrow) return;
 
-    const newList = list.map((b) => (b.id === data.id ? data : b));
-    setList(newList);
-    localStorage.setItem("books", JSON.stringify(newList));
+      const updatedBorrowQty = existingBorrow.qty - 1;
+      const updatedBook = { ...data, quantity: data.quantity + 1 };
+      const updatedList = cloneList.map((b) => (b.id === updatedBook.id ? updatedBook : b));
+      setList(updatedList);
+      localStorage.setItem("books", JSON.stringify(updatedList));
 
-    const newBorrow = borrow
-      .map((b) =>
-        b.id === data.id ? { ...b, qty: existing.qty } : b
-      )
-      .filter((b) => b.qty > 0);
+      const newBorrow = borrow
+        .map((b) => (b.id === updatedBook.id ? { ...b, qty: updatedBorrowQty } : b))
+        .filter((b) => b.qty > 0);
 
-    setBorrow(newBorrow);
-    localStorage.setItem("borrow", JSON.stringify(newBorrow));
+      setBorrow(newBorrow);
+      localStorage.setItem("borrow", JSON.stringify(newBorrow));
+      return;
+    }
 
-    return;
-  }
+    if (action === "delete") {
+      if (!existingBorrow) return;
 
-  // ===== DELETE ENTIRE BOOK FROM BORROW LIST =====
-  if (action === "delete") {
-    const existing = borrow.find((b) => b.id === data.id);
-    if (!existing) return;
+      const updatedBook = { ...data, quantity: data.quantity + existingBorrow.qty };
+      const updatedList = cloneList.map((b) => (b.id === updatedBook.id ? updatedBook : b));
+      setList(updatedList);
+      localStorage.setItem("books", JSON.stringify(updatedList));
 
-    // Add back all qty into main stock
-    data.quantity += existing.qty;
-
-    // update main list
-    const newList = list.map((b) => (b.id === data.id ? data : b));
-    setList(newList);
-    localStorage.setItem("books", JSON.stringify(newList));
-
-    // remove from borrow
-    const newBorrow = borrow.filter((b) => b.id !== data.id);
-    setBorrow(newBorrow);
-    localStorage.setItem("borrow", JSON.stringify(newBorrow));
-
-    return;
-  }
-
-  // ===== FIRST TIME BORROW =====
-  if (action === "first") {
-    if (data.quantity <= 0) return alert("Out of stock!");
-    data.quantity--;
-
-    const newList = list.map((b) => (b.id === data.id ? data : b));
-    setList(newList);
-    localStorage.setItem("books", JSON.stringify(newList));
-
-    const newBorrow = [...borrow, { ...data, qty: 1 }];
-    setBorrow(newBorrow);
-    localStorage.setItem("borrow", JSON.stringify(newBorrow));
-
-    return;
-  }
-};
+      const newBorrow = borrow.filter((b) => b.id !== updatedBook.id);
+      setBorrow(newBorrow);
+      localStorage.setItem("borrow", JSON.stringify(newBorrow));
+      return;
+    }
+  };
 
   return {
     book,
+    setBook,
     list,
     borrow,
-    handleChange,
     handleSubmit,
     handleDelete,
     handleEdit,
     handleBorrowedBook,
-    setBook,
   };
 };
 

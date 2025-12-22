@@ -8,11 +8,14 @@
   border-radius: 12px;
 }
 
-button {
+.login-btn {
   background: #193A64 !important;
   border: none;
+  color:#fff;
+  font-weight: 600;
+  font-size: 18px;
 }
 
-button:hover {
+.login-btn:hover {
   opacity: 0.9;
 }

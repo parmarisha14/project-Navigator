@@ -10,7 +10,7 @@
   margin-bottom: 4px;
 }
 
-/* ------- Cards Section ------- */
+
 .cards-row {
   display: flex;
   flex-wrap: wrap;
@@ -100,7 +100,7 @@
   color: #64748b;
 }
 
-/* ------- Table ------- */
+
 .books-table-wrapper {
   background: #fff;
   padding: 20px;
@@ -148,7 +148,7 @@
   font-weight: 600;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .cards-row {
     flex-direction: column;

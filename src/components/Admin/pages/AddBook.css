@@ -14,10 +14,7 @@
 .addbook-form .form-group {
   margin-bottom: 16px;
 }
-.search-input-group input:focus {
-  outline: none;
-  box-shadow: none;
-}
+
 .addbook-form label {
   font-weight: 500;
   margin-bottom: 6px;

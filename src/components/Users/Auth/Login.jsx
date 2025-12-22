@@ -61,8 +61,8 @@ const Login = ({ setIsLoggedIn, setRole }) => {
               type={showPass ? "text" : "password"}
               name="password"
               className="form-control"
-              placeholder="Enter min 8 characters"
-              minLength={8}
+              placeholder="Enter  Passwords"
+             
               required
               value={formData.password}
               onChange={handleChange}
@@ -76,7 +76,7 @@ const Login = ({ setIsLoggedIn, setRole }) => {
             </span>
           </div>
 
-          <button type="submit" className="btn btn-primary w-100 py-2">Sign In</button>
+          <button type="submit" className="login-btn w-100 py-2">Sign In</button>
 
           <p className="text-center mt-3">
             Don't have an account? <a href="/register">Register</a> <br />
