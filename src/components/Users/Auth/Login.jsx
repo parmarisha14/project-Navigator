@@ -78,10 +78,24 @@ const Login = ({ setIsLoggedIn, setRole }) => {
 
           <button type="submit" className="login-btn w-100 py-2">Sign In</button>
 
-          <p className="text-center mt-3">
-            Don't have an account? <a href="/register">Register</a> <br />
-            Are you Admin? <a href="/admin-login">Click here to login as Admin</a>
-          </p>
+         <p className="text-center mt-3">
+  Don't have an account?{" "}
+  <span
+    onClick={() => navigate("/register")}
+    style={{ color: "#0d6efd", cursor: "pointer", fontWeight: "500" }}
+  >
+    Register
+  </span>
+  <br />
+  Are you Admin?{" "}
+  <span
+    onClick={() => navigate("/admin-login")}
+    style={{ color: "#0d6efd", cursor: "pointer", fontWeight: "500" }}
+  >
+    Click here to login as Admin
+  </span>
+</p>
+
         </form>
       </div>
     </div>
