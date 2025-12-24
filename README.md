@@ -39,7 +39,7 @@ Use these to login as Admin:
 
 Email: admin@gmail.com
 
-Password: 12345678
+Password: 12345
 
 ये values आपके React State / Local Storage में match करवानी होती हैं।
 ```
