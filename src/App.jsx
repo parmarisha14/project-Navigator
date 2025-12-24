@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+
+import React from "react";
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 
 import Layout from "./components/Admin/Layout";
@@ -19,6 +20,7 @@ import Books from "./components/Users/pages/Books";
 import MyBooks from "./components/Users/pages/MyBooks";
 
 import useBook from "./Hooks/useBook";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const {
@@ -31,63 +33,75 @@ const App = () => {
     handleBorrowedBook,
   } = useBook();
 
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    setIsAdminLoggedIn(localStorage.getItem("adminLogin") === "true");
-    setIsUserLoggedIn(localStorage.getItem("userLogin") === "true");
-  }, []);
-
+  
   const handleAdminLogout = () => {
     localStorage.removeItem("adminLogin");
     localStorage.removeItem("adminRole");
-    setIsAdminLoggedIn(false);
+    navigate("/admin-login");
   };
 
+  // User logout
   const handleUserLogout = () => {
     localStorage.removeItem("userLogin");
     localStorage.removeItem("userRole");
     localStorage.removeItem("currentUser");
     localStorage.removeItem("borrow");
-    setIsUserLoggedIn(false);
+    navigate("/login");
   };
 
-  const AdminProtected = () =>
-    isAdminLoggedIn ? <Outlet /> : <Navigate to="/admin-login" replace />;
+  
+  const AdminProtected = () => {
+    const isAdmin = localStorage.getItem("adminLogin") === "true";
+    return isAdmin ? <Outlet /> : <Navigate to="/admin-login" replace />;
+  };
 
-  const UserProtected = () =>
-    isUserLoggedIn ? <Outlet /> : <Navigate to="/login" replace />;
+  // User protected route
+  const UserProtected = () => {
+    const isUser = localStorage.getItem("userLogin") === "true";
+    return isUser ? <Outlet /> : <Navigate to="/login" replace />;
+  };
 
   return (
     <Routes>
+      {/* Admin Login */}
       <Route
         path="/admin-login"
         element={
-          !isAdminLoggedIn ? (
-            <AdminLogin setIsLoggedIn={setIsAdminLoggedIn} />
+          localStorage.getItem("adminLogin") !== "true" ? (
+            <AdminLogin />
           ) : (
             <Navigate to="/admin" replace />
           )
         }
       />
 
+      
       <Route
         path="/login"
         element={
-          !isUserLoggedIn ? (
-            <UserLogin setIsLoggedIn={setIsUserLoggedIn} />
+          localStorage.getItem("userLogin") !== "true" ? (
+            <UserLogin />
           ) : (
             <Navigate to="/" replace />
           )
         }
       />
 
+      
       <Route
         path="/register"
-        element={!isUserLoggedIn ? <Register /> : <Navigate to="/" replace />}
+        element={
+          localStorage.getItem("userLogin") !== "true" ? (
+            <Register />
+          ) : (
+            <Navigate to="/" replace />
+          )
+        }
       />
 
+      
       <Route element={<AdminProtected />}>
         <Route element={<Layout handleLogout={handleAdminLogout} />}>
           <Route
@@ -111,6 +125,7 @@ const App = () => {
         </Route>
       </Route>
 
+    
       <Route element={<UserProtected />}>
         <Route element={<UserLayout handleLogout={handleUserLogout} />}>
           <Route
@@ -147,12 +162,13 @@ const App = () => {
         </Route>
       </Route>
 
+     
       <Route
         path="*"
         element={
-          isAdminLoggedIn ? (
+          localStorage.getItem("adminLogin") === "true" ? (
             <Navigate to="/admin" replace />
-          ) : isUserLoggedIn ? (
+          ) : localStorage.getItem("userLogin") === "true" ? (
             <Navigate to="/" replace />
           ) : (
             <Navigate to="/login" replace />

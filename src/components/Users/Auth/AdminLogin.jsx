@@ -10,7 +10,6 @@ const AdminLogin = ({ setIsLoggedIn, setRole }) => {
   const [showPass, setShowPass] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
 
-  
   useEffect(() => {
     const isLogged = localStorage.getItem("adminLogin") === "true";
     if (isLogged) {
@@ -28,7 +27,10 @@ const AdminLogin = ({ setIsLoggedIn, setRole }) => {
     e.preventDefault();
 
     // Admin credentials
-    if (formData.email === "admin@gmail.com" && formData.password === "12345678") {
+    if (
+      formData.email === "admin@gmail.com" &&
+      formData.password === "12345678"
+    ) {
       localStorage.setItem("adminLogin", "true");
       localStorage.setItem("adminRole", "admin");
 
@@ -54,7 +56,9 @@ const AdminLogin = ({ setIsLoggedIn, setRole }) => {
         <form onSubmit={handleSubmit}>
           <label className="form-label fw-semibold">Email</label>
           <div className="input-group mb-3">
-            <span className="input-group-text bg-white"><FaEnvelope /></span>
+            <span className="input-group-text bg-white">
+              <FaEnvelope />
+            </span>
             <input
               type="email"
               name="email"
@@ -65,10 +69,11 @@ const AdminLogin = ({ setIsLoggedIn, setRole }) => {
               onChange={handleChange}
             />
           </div>
-
           <label className="form-label fw-semibold">Password</label>
           <div className="input-group mb-3">
-            <span className="input-group-text bg-white"><FaLock /></span>
+            <span className="input-group-text bg-white">
+              <FaLock />
+            </span>
             <input
               type={showPass ? "text" : "password"}
               name="password"
@@ -87,10 +92,17 @@ const AdminLogin = ({ setIsLoggedIn, setRole }) => {
               {showPass ? <AiFillEyeInvisible /> : <AiFillEye />}
             </span>
           </div>
-
           <button type="submit" className="login-btn w-100 py-2">
             Sign In
           </button>
+          <br />
+          Are you Admin?{" "}
+          <span
+            onClick={() => navigate("/login")}
+            style={{ color: "#0d6efd", cursor: "pointer", fontWeight: "500" }}
+          >
+            Click here to login as User
+          </span>
         </form>
       </div>
     </div>

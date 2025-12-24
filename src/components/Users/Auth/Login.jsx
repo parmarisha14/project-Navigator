@@ -5,29 +5,36 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import logo from "../../../assets/images/logo1.png";
 import "./Login.css";
 
-const Login = ({ setIsLoggedIn, setRole }) => {
+const Login = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+  
     let users = JSON.parse(localStorage.getItem("userData")) || [];
     if (!Array.isArray(users)) users = [users];
 
-    const matchedUser = users.find(u => u.email === formData.email && u.password === formData.password);
+    const matchedUser = users.find(
+      (u) => u.email === formData.email && u.password === formData.password
+    );
+
     if (matchedUser) {
-      localStorage.setItem("userLogin", true);
+      
+      localStorage.setItem("userLogin", "true");
       localStorage.setItem("userRole", "user");
       localStorage.setItem("currentUser", JSON.stringify(matchedUser));
-      setIsLoggedIn(true);
-      setRole("user");
-      navigate("/");
-      return;
+
+     
+      navigate("/", { replace: true });
+    } else {
+      alert("Invalid User Email or Password!");
     }
-    alert("Invalid User Email or Password!");
   };
 
   return (
@@ -42,7 +49,9 @@ const Login = ({ setIsLoggedIn, setRole }) => {
         <form onSubmit={handleSubmit}>
           <label className="form-label fw-semibold">Email</label>
           <div className="input-group mb-3">
-            <span className="input-group-text bg-white"><FaEnvelope /></span>
+            <span className="input-group-text bg-white">
+              <FaEnvelope />
+            </span>
             <input
               type="email"
               name="email"
@@ -56,13 +65,14 @@ const Login = ({ setIsLoggedIn, setRole }) => {
 
           <label className="form-label fw-semibold">Password</label>
           <div className="input-group mb-3">
-            <span className="input-group-text bg-white"><FaLock /></span>
+            <span className="input-group-text bg-white">
+              <FaLock />
+            </span>
             <input
               type={showPass ? "text" : "password"}
               name="password"
               className="form-control"
-              placeholder="Enter  Passwords"
-             
+              placeholder="Enter Password"
               required
               value={formData.password}
               onChange={handleChange}
@@ -76,26 +86,27 @@ const Login = ({ setIsLoggedIn, setRole }) => {
             </span>
           </div>
 
-          <button type="submit" className="login-btn w-100 py-2">Sign In</button>
+          <button type="submit" className="login-btn w-100 py-2">
+            Sign In
+          </button>
 
-         <p className="text-center mt-3">
-  Don't have an account?{" "}
-  <span
-    onClick={() => navigate("/register")}
-    style={{ color: "#0d6efd", cursor: "pointer", fontWeight: "500" }}
-  >
-    Register
-  </span>
-  <br />
-  Are you Admin?{" "}
-  <span
-    onClick={() => navigate("/admin-login")}
-    style={{ color: "#0d6efd", cursor: "pointer", fontWeight: "500" }}
-  >
-    Click here to login as Admin
-  </span>
-</p>
-
+          <p className="text-center mt-3">
+            Don't have an account?{" "}
+            <span
+              onClick={() => navigate("/register")}
+              style={{ color: "#0d6efd", cursor: "pointer", fontWeight: "500" }}
+            >
+              Register
+            </span>
+            <br />
+            Are you Admin?{" "}
+            <span
+              onClick={() => navigate("/admin-login")}
+              style={{ color: "#0d6efd", cursor: "pointer", fontWeight: "500" }}
+            >
+              Click here to login as Admin
+            </span>
+          </p>
         </form>
       </div>
     </div>
