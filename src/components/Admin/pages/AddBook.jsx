@@ -34,7 +34,7 @@ const AddBook = ({ handleSubmit, book: editBook, setBook }) => {
   ];
 
   return (
-    <div className="addbook-wrapper">
+    <div className="addbook-wrapper mt-5">
       <div className="addbook-card">
         <h4 className="mb-2">{isEdit ? "Edit Book" : "Add New Book"}</h4>
 
