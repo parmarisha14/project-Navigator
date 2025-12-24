@@ -26,7 +26,7 @@ const AdminLogin = ({ setIsLoggedIn, setRole }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Admin credentials
+    
     if (
       formData.email === "admin@gmail.com" &&
       formData.password === "12345"
@@ -79,7 +79,7 @@ const AdminLogin = ({ setIsLoggedIn, setRole }) => {
               name="password"
               className="form-control"
               placeholder="Enter Password"
-              minLength={8}
+             
               required
               value={formData.password}
               onChange={handleChange}
