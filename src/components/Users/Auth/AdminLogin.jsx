@@ -29,7 +29,7 @@ const AdminLogin = ({ setIsLoggedIn, setRole }) => {
     // Admin credentials
     if (
       formData.email === "admin@gmail.com" &&
-      formData.password === "12345678"
+      formData.password === "12345"
     ) {
       localStorage.setItem("adminLogin", "true");
       localStorage.setItem("adminRole", "admin");
