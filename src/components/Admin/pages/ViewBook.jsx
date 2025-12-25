@@ -16,7 +16,7 @@ const ViewBook = ({ list, handleDelete, handleEdit }) => {
   const prevPage = () => currentPage > 1 && setCurrentPage(currentPage - 1);
 
   return (
-    <div className="viewbook-wrapper">
+    <div className="viewbook-wrapper mt-5">
       <div className="viewbook-card">
         <div className="viewbook-header">
           <h2>Books List</h2>
