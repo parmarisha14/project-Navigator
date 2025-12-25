@@ -42,7 +42,7 @@ const App = () => {
     navigate("/admin-login");
   };
 
-  // User logout
+  
   const handleUserLogout = () => {
     localStorage.removeItem("userLogin");
     localStorage.removeItem("userRole");
@@ -57,7 +57,7 @@ const App = () => {
     return isAdmin ? <Outlet /> : <Navigate to="/admin-login" replace />;
   };
 
-  // User protected route
+ 
   const UserProtected = () => {
     const isUser = localStorage.getItem("userLogin") === "true";
     return isUser ? <Outlet /> : <Navigate to="/login" replace />;
@@ -65,7 +65,7 @@ const App = () => {
 
   return (
     <Routes>
-      {/* Admin Login */}
+      
       <Route
         path="/admin-login"
         element={
